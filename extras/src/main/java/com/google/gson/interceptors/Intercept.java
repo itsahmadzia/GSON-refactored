@@ -22,43 +22,37 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Use this annotation to indicate various interceptors for class instances after they have been
- * processed by Gson. For example, you can use it to validate an instance after it has been
- * deserialized from Json. Here is an example of how this annotation is used:
+ * Indicates an interceptor to be applied after an object has been deserialized by Gson. Useful for
+ * validation, normalization, or initialization.
  *
- * <p>Here is an example of how this annotation is used:
- *
- * <pre>
- * &#64;Intercept(postDeserialize=UserValidator.class)
+ * <pre>{@code
+ * @Intercept(postDeserialize = UserValidator.class)
  * public class User {
  *   String name;
  *   String password;
  *   String emailAddress;
  * }
  *
- * public class UserValidator implements JsonPostDeserializer&lt;User&gt; {
+ * public class UserValidator implements JsonPostDeserializer<User> {
  *   public void postDeserialize(User user) {
- *     // Do some checks on user
  *     if (user.name == null || user.password == null) {
  *       throw new JsonParseException("name and password are required fields.");
  *     }
  *     if (user.emailAddress == null) {
- *       emailAddress = "unknown"; // assign a default value.
+ *       user.emailAddress = "unknown"; // Assign default value
  *     }
  *   }
  * }
- * </pre>
- *
- * @author Inderjeet Singh
+ * }</pre>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface Intercept {
 
   /**
-   * Specify the class that provides the methods that should be invoked after an instance has been
-   * deserialized.
+   * Returns the post-deserialization interceptor class.
+   *
+   * @return Class implementing {@code JsonPostDeserializer<T>} to be applied after deserialization.
    */
-  @SuppressWarnings("rawtypes")
-  public Class<? extends JsonPostDeserializer> postDeserialize();
+  Class<? extends JsonPostDeserializer<?>> postDeserialize();
 }
