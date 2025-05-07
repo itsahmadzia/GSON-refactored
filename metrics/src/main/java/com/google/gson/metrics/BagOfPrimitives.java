@@ -1,33 +1,13 @@
-/*
- * Copyright (C) 2011 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.google.gson.metrics;
 
 import com.google.common.base.Objects;
 
-/**
- * Class with a bunch of primitive fields
- *
- * @author Inderjeet Singh
- */
 public class BagOfPrimitives {
   public static final long DEFAULT_VALUE = 0;
-  public long longValue;
-  public int intValue;
-  public boolean booleanValue;
-  public String stringValue;
+  private long longValue;
+  private int intValue;
+  private boolean booleanValue;
+  private String stringValue;
 
   public BagOfPrimitives() {
     this(DEFAULT_VALUE, 0, false, "");
@@ -40,8 +20,20 @@ public class BagOfPrimitives {
     this.stringValue = stringValue;
   }
 
+  public long getLongValue() {
+    return longValue;
+  }
+
   public int getIntValue() {
     return intValue;
+  }
+
+  public boolean isBooleanValue() {
+    return booleanValue;
+  }
+
+  public String getStringValue() {
+    return stringValue;
   }
 
   public String getExpectedJson() {
@@ -57,19 +49,12 @@ public class BagOfPrimitives {
         + ","
         + "\"stringValue\":\""
         + stringValue
-        + "\""
-        + "}";
+        + "\"}";
   }
 
   @Override
   public int hashCode() {
-    int prime = 31;
-    int result = 1;
-    result = prime * result + (booleanValue ? 1231 : 1237);
-    result = prime * result + intValue;
-    result = prime * result + (int) (longValue ^ (longValue >>> 32));
-    result = prime * result + ((stringValue == null) ? 0 : stringValue.hashCode());
-    return result;
+    return Objects.hashCode(longValue, intValue, booleanValue, stringValue);
   }
 
   @Override
