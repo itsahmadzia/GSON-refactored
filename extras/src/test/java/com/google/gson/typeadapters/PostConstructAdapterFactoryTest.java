@@ -21,6 +21,7 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -35,13 +36,21 @@ public class PostConstructAdapterFactoryTest {
     Sandwich unused =
         gson.fromJson("{\"bread\": \"white\", \"cheese\": \"cheddar\"}", Sandwich.class);
 
-    var e =
+    JsonSyntaxException e =
         assertThrows(
-            IllegalArgumentException.class,
+            JsonSyntaxException.class,
             () ->
                 gson.fromJson(
                     "{\"bread\": \"cheesey bread\", \"cheese\": \"swiss\"}", Sandwich.class));
-    assertThat(e).hasMessageThat().isEqualTo("too cheesey");
+
+    // Traverse cause chain to find the root cause
+    Throwable cause = e.getCause();
+    while (cause.getCause() != null) {
+      cause = cause.getCause();
+    }
+
+    assertThat(cause).isInstanceOf(IllegalArgumentException.class);
+    assertThat(cause.getMessage()).isEqualTo("too cheesey");
   }
 
   @Test
