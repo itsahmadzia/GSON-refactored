@@ -111,7 +111,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>3.6.1</version>
         <executions>
           <execution>
             <id>enforce-versions</id>
@@ -142,7 +142,7 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.44.4</version>
+        <version>2.46.1</version>
         <executions>
           <execution>
             <goals>
@@ -303,7 +303,7 @@
               <path>
                 <groupId>com.google.errorprone</groupId>
                 <artifactId>error_prone_core</artifactId>
-                <version>2.38.0</version>
+                <version>2.41.0</version>
               </path>
             </annotationProcessorPaths>
           </configuration>
@@ -372,7 +372,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-gpg-plugin</artifactId>
-          <version>3.2.7</version>
+          <version>3.2.8</version>
           <configuration>
             <skip>${gson.isTestModule}</skip>
           </configuration>
